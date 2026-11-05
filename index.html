@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Защита кейсов «Экологические аспекты качества продуктов питания» · 11 класс</title>
+<style>
+:root{
+  --leaf:#2F7D4A; --leaf2:#3FA66A; --moss:#1B5E3B; --sage:#A8D5B5;
+  --cream:#F7F3E8; --cream2:#FFFCF4; --sand:#E8DFC8;
+  --ink:#1F2A24; --ink2:#4A5A50; --muted:#6B7C72;
+  --sun:#E6B422; --sun2:#F5D76E; --terra:#C45C26; --sky:#4A8B8A;
+  --card:#FFFFFF; --ok:#2F7D4A; --warn:#C45C26; --bad:#B33A3A;
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#13261c;font-family:"Segoe UI","PT Sans","DejaVu Sans",system-ui,sans-serif;color:var(--ink)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;border-radius:4px;background:var(--cream)}
+.slide{position:absolute;inset:0;padding:48px 72px 64px;display:none;flex-direction:column;
+  background:
+    radial-gradient(circle at 6% 10%,rgba(168,213,181,.55),transparent 34%),
+    radial-gradient(circle at 94% 12%,rgba(230,180,34,.28),transparent 30%),
+    radial-gradient(circle at 88% 92%,rgba(74,139,138,.18),transparent 34%),
+    radial-gradient(circle at 10% 90%,rgba(47,125,74,.14),transparent 28%),
+    var(--cream);overflow:hidden}
+.slide.active{display:flex;animation:slin .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes slin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hdr{display:flex;align-items:center;gap:18px;margin-bottom:22px;z-index:2}
+.hdr h2{font-size:46px;font-weight:800;line-height:1.08;letter-spacing:-.4px;color:var(--moss)}
+.hdr h2 .g{color:var(--leaf);background:linear-gradient(90deg,var(--leaf),var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stage-chip{flex:none;font-size:20px;font-weight:700;color:#fff;padding:9px 18px;border-radius:40px;
+  background:linear-gradient(90deg,var(--leaf),var(--sky));box-shadow:0 6px 16px rgba(47,125,74,.28);white-space:nowrap}
+.stage-chip.y{background:linear-gradient(90deg,var(--sun),var(--terra))}
+.stage-chip.t{background:linear-gradient(90deg,var(--sky),#2F6B6A)}
+.stage-chip.o{background:linear-gradient(90deg,var(--terra),#E07A3D)}
+.hdr .sp{flex:1}
+.body{flex:1;min-height:0;display:flex;gap:26px;z-index:2}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--card);border-radius:var(--radius);padding:22px 26px;box-shadow:0 10px 28px rgba(31,42,36,.08);border-top:8px solid var(--leaf);position:relative}
+.card.t{border-top-color:var(--sky)}.card.y{border-top-color:var(--sun)}.card.o{border-top-color:var(--terra)}.card.s{border-top-color:var(--sage)}
+.card h3{font-size:28px;font-weight:800;margin-bottom:10px;color:var(--moss)}
+p,li{font-size:24px;line-height:1.35;color:var(--ink)}
+.small{font-size:20px;color:var(--ink2);line-height:1.35}
+.tiny{font-size:17px;color:var(--muted);line-height:1.3}
+ul.b{list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.b li{padding-left:36px;position:relative}
+ul.b li:before{content:'';position:absolute;left:4px;top:10px;width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--leaf2),var(--sky));transform:rotate(12deg)}
+b,strong{font-weight:800}
+.hl{background:linear-gradient(transparent 58%,rgba(230,180,34,.55) 58%);padding:0 3px}
+.note{background:rgba(47,125,74,.08);border-left:5px solid var(--leaf);padding:12px 16px;border-radius:0 14px 14px 0;font-size:20px;color:var(--ink2)}
+.warn{background:rgba(196,92,38,.08);border-left:5px solid var(--terra);padding:12px 16px;border-radius:0 14px 14px 0;font-size:20px;color:#6b3a18}
+.model{display:inline-block;font-size:15px;font-weight:700;background:var(--sand);color:var(--moss);padding:4px 10px;border-radius:20px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1;min-height:0}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;flex:1;min-height:0}
+.kpi{font-size:42px;font-weight:900;color:var(--leaf);line-height:1}
+.kpi span{display:block;font-size:18px;font-weight:600;color:var(--ink2);margin-top:4px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--sage);border-radius:40px;padding:6px 14px;font-size:18px;font-weight:700;color:var(--moss)}
+.btn{font-family:inherit;font-size:22px;font-weight:700;border:none;border-radius:40px;padding:12px 24px;cursor:pointer;color:#fff;
+  background:linear-gradient(90deg,var(--leaf),var(--leaf2));box-shadow:0 6px 14px rgba(47,125,74,.28);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn.y{background:linear-gradient(90deg,var(--sun),var(--terra));color:#2a1a00}
+.btn.g{background:#E8F2EB;color:var(--moss);box-shadow:none}
+.btn.sm{font-size:18px;padding:8px 16px}
+/* timer */
+.timer{display:flex;align-items:center;gap:10px;background:#fff;border-radius:50px;padding:8px 10px 8px 18px;box-shadow:0 6px 18px rgba(31,42,36,.1);border:3px solid var(--sun)}
+.timer .tv{font-size:36px;font-weight:800;font-variant-numeric:tabular-nums;min-width:108px;text-align:center;color:var(--ink)}
+.timer .tl{font-size:16px;color:var(--ink2);font-weight:600;max-width:110px;line-height:1.1}
+.timer button{width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;font-size:20px;font-family:inherit;font-weight:800;background:#FFF1C9;color:var(--ink)}
+.timer button.go{background:linear-gradient(135deg,var(--leaf),var(--sky));color:#fff}
+.timer.run{border-color:var(--leaf)}.timer.done{border-color:var(--terra);animation:pulse 1s infinite}
+.timer.done .tv{color:var(--terra)}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(196,92,38,.18)}}
+/* chrome */
+#bar{position:fixed;left:0;bottom:0;height:7px;background:linear-gradient(90deg,var(--leaf),var(--sun),var(--sky));transition:width .35s;z-index:50}
+#counter{position:fixed;right:16px;bottom:14px;font:700 16px system-ui,sans-serif;color:#fff;background:rgba(27,94,59,.82);padding:5px 12px;border-radius:18px;z-index:50}
+#navbtns{position:fixed;left:14px;bottom:12px;display:flex;gap:7px;z-index:50}
+#navbtns button{font:700 16px system-ui,sans-serif;border:none;border-radius:16px;padding:6px 12px;background:rgba(27,94,59,.82);color:#fff;cursor:pointer}
+#toc{position:fixed;inset:0;background:rgba(19,38,28,.88);z-index:100;display:none;align-items:center;justify-content:center}
+#toc.on{display:flex}
+#toc .box{background:var(--cream);border-radius:28px;padding:30px 36px;width:min(1100px,92vw);max-height:88vh;overflow:auto}
+#toc h3{font-size:28px;margin-bottom:12px;color:var(--moss)}
+#toc ol{columns:2;column-gap:36px;padding-left:30px}
+#toc li{font-size:18px;line-height:1.3;padding:4px 0;cursor:pointer;break-inside:avoid}
+#toc li:hover,#toc li.cur{color:var(--leaf);font-weight:700}
+/* title */
+.title{background:linear-gradient(135deg,#1B5E3B 0%,#2F7D4A 40%,#4A8B8A 75%,#E6B422 100%)!important;color:#fff;justify-content:center;padding:70px 90px}
+.title h1{font-size:64px;font-weight:900;line-height:1.05;color:#fff;text-shadow:0 6px 24px rgba(0,30,10,.35);max-width:1400px}
+.title .sub{font-size:30px;font-weight:500;color:#F7F3E8;margin-top:22px;max-width:1200px;line-height:1.3}
+.title .meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.title .meta span{font-size:22px;font-weight:700;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);padding:9px 18px;border-radius:28px;color:#fff}
+/* video */
+.vidbox{background:#0d1a12;border-radius:18px;overflow:hidden;border:2px solid var(--sage);flex:1;display:flex;flex-direction:column;min-height:0}
+.vidbox iframe{width:100%;flex:1;min-height:320px;border:0;background:#000}
+.vcap{font-size:16px;color:#d8e8dc;padding:10px 14px;background:#1a2e22;line-height:1.35}
+.vcap a{color:#F5D76E}
+/* quiz */
+.qcard{background:#fff;border-radius:20px;padding:18px 22px;box-shadow:0 8px 22px rgba(31,42,36,.08);border:2px solid var(--sand);cursor:default}
+.qcard .qn{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--moss)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font-size:18px;padding:10px 14px;border-radius:14px;background:#F3F7F4;border:2px solid transparent;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--sage)}
+.opt.sel{border-color:var(--leaf);background:#E8F5EC}
+.opt.correct{border-color:var(--ok);background:#D8F0E0;font-weight:700}
+.opt.wrong{border-color:var(--bad);background:#FCE8E8}
+.badge{display:inline-block;font-size:14px;font-weight:800;padding:3px 10px;border-radius:20px;background:var(--sage);color:var(--moss)}
+.table{width:100%;border-collapse:collapse;font-size:20px}
+.table th,.table td{border:1px solid var(--sand);padding:10px 12px;text-align:left;vertical-align:top}
+.table th{background:var(--leaf);color:#fff;font-weight:700}
+.table tr:nth-child(even){background:#F3F7F4}
+.leaf-deco{position:absolute;opacity:.12;pointer-events:none;z-index:0;font-size:180px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.role{background:#fff;border-radius:18px;padding:16px 18px;border-left:6px solid var(--leaf);box-shadow:0 6px 16px rgba(31,42,36,.06)}
+.role h4{font-size:22px;color:var(--moss);margin-bottom:4px}
+.role p{font-size:18px;color:var(--ink2)}
+.filters{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;flex:1}
+.filt{background:#fff;border-radius:18px;padding:16px 14px;text-align:center;box-shadow:0 8px 20px rgba(31,42,36,.07);border-top:6px solid var(--leaf);display:flex;flex-direction:column;gap:8px}
+.filt .n{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--leaf),var(--sky));color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.filt h4{font-size:18px;color:var(--moss);line-height:1.2}
+.filt p{font-size:15px;color:var(--ink2);line-height:1.25}
+.case-head{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.case-num{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--leaf),var(--sky));color:#fff;font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.compare .box{background:#fff;border-radius:18px;padding:16px 18px;border:2px solid var(--sand)}
+.compare .box h4{font-size:22px;margin-bottom:8px}
+.compare .a{border-top:6px solid var(--leaf)}.compare .b{border-top:6px solid var(--terra)}
+.score{display:flex;gap:10px;flex-wrap:wrap}
+.score .s{flex:1;min-width:150px;background:#fff;border-radius:16px;padding:14px;border-top:5px solid var(--leaf);text-align:center}
+.score .s .pts{font-size:32px;font-weight:900;color:var(--leaf)}
+.score .s .lb{font-size:16px;color:var(--ink2);margin-top:4px}
+.refl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.refl .r{background:#fff;border-radius:20px;padding:20px;border-top:8px solid var(--leaf);min-height:160px}
+.refl .r h4{font-size:20px;color:var(--moss);margin-bottom:10px}
+.refl .r .line{border-bottom:2px dashed var(--sand);height:36px;margin:8px 0}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<section class="slide title active" data-title="1. Титул — Экспертное бюро">
+  <div class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45);color:#fff;margin-bottom:18px">Факультатив · 11 класс · КГУ «Гимназия №1», Караганда</div>
+  <h1>Защита кейсов<br>«Экологические аспекты<br>качества продуктов питания»</h1>
+  <div class="sub">Урок-защита: учащиеся — экспертные группы. Вывод опирается на проверяемые данные, а не на рекламные надписи.</div>
+  <div class="meta">
+    <span>Педагог: Хмель С. С.</span>
+    <span>6 ноября 2026 г.</span>
+    <span>11 «Б»</span>
+    <span>45 мин · 4 кейса</span>
+  </div>
+</section>
+
+<section class="slide" data-title="2. Оргмомент — Экспертное бюро (0–2)">
+  <div class="hdr"><span class="stage-chip">0–2 мин · Начало</span><h2>Экспертное <span class="g">бюро</span></h2><div class="sp"></div><div class="timer" data-min="2" data-label="старт"></div></div>
+  <div class="body">
+    <div class="col" style="flex:1.1">
+      <div class="card">
+        <h3>Формат урока</h3>
+        <ul class="b">
+          <li>Вы — <b>экспертные группы</b>: оцениваете качество продуктов и экологические последствия.</li>
+          <li>Разданы <b>листы экспертной оценки</b> (Прил. 3).</li>
+          <li>Регламент защиты: <b>3 мин выступление + 1 мин вопросы</b>.</li>
+          <li>Оценивается <b>аргументация</b>, а не оформление слайдов.</li>
+        </ul>
+      </div>
+      <div class="note">Важно: информация в карточках — <b>учебная модель</b>. Она не описывает конкретные торговые марки и не заменяет лабораторную проверку.</div>
+    </div>
+    <div class="col">
+      <div class="roles">
+        <div class="role"><h4>🗣 Докладчик</h4><p>Представляет ситуацию, проблему и вывод группы.</p></div>
+        <div class="role" style="border-left-color:var(--sky)"><h4>🔎 Аналитик фактов</h4><p>Отделяет факты маркировки от предположений.</p></div>
+        <div class="role" style="border-left-color:var(--sun)"><h4>🌿 Эко-эксперт</h4><p>Оценивает упаковку, перевозку, отходы.</p></div>
+        <div class="role" style="border-left-color:var(--terra)"><h4>❓ Ответственный за вопросы</h4><p>Готовит ответ аудитории и 1 вопрос слушателям.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="3. Мотивация — Две этикетки (2–6)">
+  <div class="hdr"><span class="stage-chip y">2–6 мин · Мотивация</span><h2>Две этикетки — <span class="g">две истории</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="этап"></div></div>
+  <div class="compare" style="flex:1">
+    <div class="box a">
+      <span class="model">учебный пример А</span>
+      <h4>🥛 «ЭКО · Фермерское»</h4>
+      <ul class="b">
+        <li>Крупная надпись «ЭКО»</li>
+        <li>Цена ниже среднего</li>
+        <li>Срок годности не указан на макете</li>
+        <li>Нет данных о партии</li>
+      </ul>
+    </div>
+    <div class="box b">
+      <span class="model">учебный пример Б</span>
+      <h4>🥛 Полная маркировка</h4>
+      <ul class="b">
+        <li>Состав, жирность, изготовитель</li>
+        <li>Дата, срок, t° хранения</li>
+        <li>Номер партии</li>
+        <li>Тип упаковки</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid3" style="margin-top:18px;flex:none">
+    <div class="card y"><h3 style="font-size:22px">❓ Вопрос 1</h3><p class="small">Можно ли по цене и надписи «эко» определить качество?</p></div>
+    <div class="card o"><h3 style="font-size:22px">❓ Вопрос 2</h3><p class="small">Доказывает ли длинный срок хранения наличие консервантов?</p></div>
+    <div class="card t"><h3 style="font-size:22px">❓ Вопрос 3</h3><p class="small">Всегда ли местный продукт экологичнее привозного?</p></div>
+  </div>
+  <div class="note" style="margin-top:14px"><b>Правило урока:</b> вывод должен опираться на <span class="hl">проверяемые данные</span>.</div>
+</section>
+
+<section class="slide" data-title="4. Цели урока">
+  <div class="hdr"><span class="stage-chip">Целеполагание</span><h2>Чему учимся <span class="g">сегодня</span></h2><div class="sp"></div></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="kpi">Все<span>учащиеся смогут</span></div>
+      <ul class="b" style="margin-top:12px">
+        <li>Определить проблему кейса</li>
+        <li>Выделить состав, маркировку, срок, хранение, происхождение</li>
+        <li>Сформулировать вывод</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <div class="kpi" style="color:var(--sky)">Большинство<span>смогут</span></div>
+      <ul class="b" style="margin-top:12px">
+        <li>Сопоставить качество и экоаспекты</li>
+        <li>Отличить факты от рекламы</li>
+        <li>Привести ≥ 2 аргумента</li>
+      </ul>
+    </div>
+    <div class="card y">
+      <div class="kpi" style="color:var(--terra)">Некоторые<span>смогут</span></div>
+      <ul class="b" style="margin-top:12px">
+        <li>Выявить недостающие данные</li>
+        <li>Предложить способы проверки</li>
+        <li>Оценить жизненный цикл</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card s" style="margin-top:18px;flex:none">
+    <h3>Ценности</h3>
+    <p class="small">Ответственность за здоровье и среду · честность с фактами · уважение в дискуссии · осознанное потребление. Экологичный выбор требует <b>проверки информации</b>, а не только доверия рекламе.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="5. Теория — Качество, безопасность, экологичность">
+  <div class="hdr"><span class="stage-chip t">Теория</span><h2>Три разных понятия — <span class="g">не путать</span></h2><div class="sp"></div></div>
+  <div class="grid3">
+    <div class="card">
+      <h3>Качество</h3>
+      <p>Совокупность характеристик: состав, свойства, соответствие заявленной информации, пригодность к использованию.</p>
+      <p class="tiny" style="margin-top:10px">Пример: жирность молока совпадает с этикеткой.</p>
+    </div>
+    <div class="card t">
+      <h3>Безопасность</h3>
+      <p>Отсутствие неприемлемого риска для здоровья при соблюдении установленных требований и условий обращения.</p>
+      <p class="tiny" style="margin-top:10px">Одной этикетки недостаточно для лабораторного подтверждения безопасности.</p>
+    </div>
+    <div class="card y">
+      <h3>Экологичность</h3>
+      <p>Оценка воздействия на среду на этапах жизненного цикла: сырьё → производство → перевозка → хранение → упаковка → отходы.</p>
+      <p class="tiny" style="margin-top:10px">«Зелёная» надпись ≠ доказанный низкий след.</p>
+    </div>
+  </div>
+  <div class="warn" style="margin-top:18px"><b>Маркетинговое заявление</b> — рекламная формулировка («натуральный», «фермерский», «эко»). Для экспертного вывода нужно понять точное значение и найти подтверждение.</div>
+</section>
+
+<section class="slide" data-title="6. Теория — Контаминанты">
+  <div class="hdr"><span class="stage-chip t">Теория</span><h2>Контаминанты: <span class="g">что ищем в анализе</span></h2><div class="sp"></div></div>
+  <div class="grid3">
+    <div class="card"><h3>🥬 Нитраты</h3><p class="small">Соли азотной кислоты; накапливаются в листовых и ранних овощах. Сами по себе не всегда опасны в допустимых количествах; риск растёт при избытке и превращении в нитриты.</p></div>
+    <div class="card t"><h3>🧪 Пестициды</h3><p class="small">Средства защиты растений. Остаточные количества нормируются. Без лабораторных данных вывод о «безопасности местных» недопустим.</p></div>
+    <div class="card y"><h3>⚙️ Тяжёлые металлы</h3><p class="small">Pb, Cd, Hg и др. Могут поступать из почвы, воды, упаковки, оборудования. Важно биоаккумулирование по пищевым цепям.</p></div>
+    <div class="card o"><h3>💊 Антибиотики</h3><p class="small">Остатки в продукции животноводства. Контролируются; самолечение животных и нарушение сроков выведения повышают риск.</p></div>
+    <div class="card s"><h3>🍄 Микотоксины</h3><p class="small">Токсины плесневых грибов (напр. афлатоксины) в зерне, орехах, кормах. Связаны с условиями хранения.</p></div>
+    <div class="card" style="border-top-color:#5B8C9A"><h3>🔬 Микропластик</h3><p class="small">Частицы пластика в воде, морепродуктах, соли. Тема исследований; для школьного кейса — осторожные формулировки и источники.</p></div>
+  </div>
+  <div class="note" style="margin-top:14px">На уроке мы <b>не измеряем</b> контаминанты. Мы учимся понимать, <b>каких данных не хватает</b> для вывода.</div>
+</section>
+
+<section class="slide" data-title="7. Теория — Добавки E + видео">
+  <div class="hdr"><span class="stage-chip t">Теория · видео</span><h2>Пищевые добавки <span class="g">E-коды</span></h2><div class="sp"></div></div>
+  <div class="body">
+    <div class="col" style="flex:.95">
+      <div class="card">
+        <h3>Группы (ориентир)</h3>
+        <ul class="b">
+          <li><b>E100–199</b> — красители</li>
+          <li><b>E200–299</b> — консерванты</li>
+          <li><b>E300–399</b> — антиокислители</li>
+          <li><b>E400–499</b> — стабилизаторы, загустители</li>
+          <li><b>E500–599</b> — эмульгаторы / регуляторы</li>
+          <li><b>E600+</b> — усилители вкуса и др.</li>
+        </ul>
+      </div>
+      <div class="note">«Е» ≠ «вредно». Много добавок — знакомые вещества (напр. E300 аскорбинка, E330 лимонная кислота). Разрешённый список — по ТР ТС / ЕАЭС. Читаем состав целиком.</div>
+    </div>
+    <div class="col"><div class="vidbox">
+<iframe src="https://www.youtube-nocookie.com/embed/ihG5Wac-05o?rel=0" title="Пищевые добавки: польза и вред" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+<div class="vcap"><b>Пищевые добавки: польза и вред</b> · Энергия из Отходов<br>
+<a href="https://www.youtube.com/watch?v=ihG5Wac-05o" target="_blank" rel="noopener">Открыть на YouTube ↗</a></div>
+</div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="8. Теория — Этикетка, срок, видео">
+  <div class="hdr"><span class="stage-chip t">Теория · видео</span><h2>Как читать <span class="g">этикетку</span></h2><div class="sp"></div></div>
+  <div class="body">
+    <div class="col" style="flex:.9">
+      <div class="card">
+        <h3>Чек-лист покупателя</h3>
+        <ul class="b">
+          <li>Наименование и состав (по убыванию массы)</li>
+          <li>Пищевая ценность, аллергены</li>
+          <li>Изготовитель, страна / регион</li>
+          <li>Дата изготовления, срок годности</li>
+          <li>Условия хранения (t°, после вскрытия)</li>
+          <li>Номер партии / прослеживаемость</li>
+          <li>Тип упаковки и знаки переработки</li>
+        </ul>
+      </div>
+      <div class="warn"><b>Срок годности сам по себе</b> не доказывает наличие консервантов: влияют обработка (пастеризация / UHT), асептическая упаковка, температура.</div>
+    </div>
+    <div class="col"><div class="vidbox">
+<iframe src="https://www.youtube-nocookie.com/embed/j4i68i7DlvA?rel=0" title="Здоровое Питание. Серия 6 — Чтение этикеток" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+<div class="vcap"><b>Здоровое Питание. Серия 6 — Чтение этикеток</b> · Роспотребнадзор<br>
+<a href="https://www.youtube.com/watch?v=j4i68i7DlvA" target="_blank" rel="noopener">Открыть на YouTube ↗</a></div>
+</div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="9. Теория — Биоаккумуляция и ТР ТС РК">
+  <div class="hdr"><span class="stage-chip t">Теория · Казахстан</span><h2>Пищевые цепи и <span class="g">ТР ТС</span></h2><div class="sp"></div></div>
+  <div class="body">
+    <div class="col">
+      <div class="card">
+        <h3>Биоаккумуляция</h3>
+        <p>Накопление вещества в организме быстрее, чем оно выводится. По пищевой цепи концентрация может расти (биомагнификация) — особенно для стойких веществ (некоторые металлы, органические загрязнители).</p>
+        <p class="small" style="margin-top:10px">Учебная схема: вода/почва → растение → травоядное → хищник / человек. Вывод о риске требует данных измерений, а не только «логики цепочки».</p>
+      </div>
+      <div class="card y" style="margin-top:8px">
+        <h3>Контекст Казахстана (ЕАЭС)</h3>
+        <ul class="b">
+          <li><b>ТР ТС 021/2011</b> — о безопасности пищевой продукции</li>
+          <li><b>ТР ТС 033/2013</b> — о безопасности молока и молочной продукции</li>
+          <li>Также важны регламенты по маркировке, упаковке, добавкам (напр. ТР ТС 022/2011, 005/2011, 029/2012)</li>
+        </ul>
+        <p class="tiny" style="margin-top:8px">На уроке ссылаемся на существование норм; конкретные ПДК не «угадываем» без источника.</p>
+      </div>
+    </div>
+    <div class="col">
+<div class="vidbox">
+<iframe src="https://www.youtube-nocookie.com/embed/qLIP9j1kQU0?rel=0" title="Здоровое Питание. Серия 4 — Здоровое питание и пищевая безопасность" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+<div class="vcap"><b>Здоровое Питание. Серия 4 — Здоровое питание и пищевая безопасность</b> · Роспотребнадзор<br>
+<a href="https://www.youtube.com/watch?v=qLIP9j1kQU0" target="_blank" rel="noopener">Открыть на YouTube ↗</a></div>
+</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="10. Пять фильтров эксперта (6–10)">
+  <div class="hdr"><span class="stage-chip">6–10 мин · Инструктаж</span><h2>Пять фильтров <span class="g">эксперта</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="инструктаж"></div></div>
+  <div class="filters">
+    <div class="filt"><div class="n">1</div><h4>Состав и маркировка</h4><p>Ингредиенты, ценность, аллергены. Что подтверждено этикеткой?</p></div>
+    <div class="filt" style="border-top-color:var(--sky)"><div class="n">2</div><h4>Срок и хранение</h4><p>Дата, срок, t°, целостность упаковки, условия витрины.</p></div>
+    <div class="filt" style="border-top-color:var(--sun)"><div class="n">3</div><h4>Происхождение</h4><p>Страна/регион, производитель, партия, прослеживаемость.</p></div>
+    <div class="filt" style="border-top-color:var(--terra)"><div class="n">4</div><h4>Производство и след</h4><p>Перевозка, охлаждение, ресурсы, упаковка.</p></div>
+    <div class="filt" style="border-top-color:#5B8C9A"><div class="n">5</div><h4>Отходы и совет</h4><p>Пищевые отходы, переработка, конкретные рекомендации.</p></div>
+  </div>
+  <div class="note" style="margin-top:18px">Рекламные слова «натуральный», «фермерский», «эко» <b>без подтверждения не являются доказательством</b>. Один показатель не даёт полной оценки. Защита — по 10 баллам (Прил. 5).</div>
+</section>
+
+<section class="slide" data-title="11. Протокол защиты и критерии">
+  <div class="hdr"><span class="stage-chip">Перед защитой</span><h2>Протокол защиты и <span class="g">критерии</span></h2><div class="sp"></div></div>
+  <div class="body">
+    <div class="col" style="flex:.85">
+      <div class="card">
+        <h3>Структура выступления (≈3 мин)</h3>
+        <ul class="b">
+          <li>Ситуация и проблема кейса</li>
+          <li>Факты с маркировки / из кейса</li>
+          <li>Что данные <b>не</b> доказывают</li>
+          <li>Экологические аспекты (≥ 2 этапа ЖЦ)</li>
+          <li>Вердикт + 2 рекомендации</li>
+          <li>1 вопрос аудитории</li>
+        </ul>
+      </div>
+      <div class="card t">
+        <h3>Речевые опоры</h3>
+        <p class="small">«В кейсе достоверно указано…» · «Данные позволяют предположить…, но не доказывают…» · «Необходимо запросить…» · «Мы рекомендуем…, потому что…»</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="score">
+        <div class="s"><div class="pts">0–2</div><div class="lb">Анализ проблемы</div></div>
+        <div class="s" style="border-top-color:var(--sky)"><div class="pts" style="color:var(--sky)">0–2</div><div class="lb">Качество и безопасность</div></div>
+        <div class="s" style="border-top-color:var(--sun)"><div class="pts" style="color:#b8860b">0–2</div><div class="lb">Экологическая оценка</div></div>
+        <div class="s" style="border-top-color:var(--terra)"><div class="pts" style="color:var(--terra)">0–2</div><div class="lb">Рекомендации и вывод</div></div>
+        <div class="s" style="border-top-color:#5B8C9A"><div class="pts" style="color:#3d6b6a">0–2</div><div class="lb">Коммуникация и ответы</div></div>
+      </div>
+      <div class="note" style="margin-top:12px"><b>Итого 10 баллов.</b> 9–10 высокий · 7–8 достаточный · 5–6 базовый · 0–4 доработка. Не снижать балл за отсутствие лабораторных данных, если группа корректно обозначила их отсутствие.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="12. Кейс 1 — Молочная продукция">
+  <div class="hdr"><span class="stage-chip o">10–26 мин · Защита 1/4</span><h2>Кейс 1. <span class="g">Молочная продукция</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="защита"></div></div>
+  <div class="case-head"><div class="case-num">1</div><div><span class="model">учебная модель · Прил. 1</span><p class="small"><b>Проблема:</b> длинный срок = консерванты и низкое качество? «Натуральный» = экологичность?</p></div></div>
+  <div class="compare">
+    <div class="box a"><h4>Продукт А</h4><p class="small">Пастеризованное 2,5 % · нормализованное молоко · +2…+6 °C · срок 7 суток · в холодильной витрине.</p></div>
+    <div class="box b"><h4>Продукт Б</h4><p class="small">Ультрапастеризованное · асептическая упаковка · до 6 мес. закрытым · после вскрытия — в холодильнике · надпись «натуральный продукт».</p></div>
+  </div>
+  <div class="grid2" style="margin-top:14px;flex:none">
+    <div class="card">
+      <h3 style="font-size:22px">Задание группе</h3>
+      <p class="small">Сравните состав, обработку, хранение, упаковку. Объясните, почему срок сам по себе не доказывает консерванты. Что ещё нужно для оценки экоследа?</p>
+    </div>
+    <div class="card t">
+      <h3 style="font-size:22px">Ожидаемый продукт</h3>
+      <p class="small">Сравнительная таблица · обоснованный вывод · рекомендации потребителю.</p>
+      <p class="tiny" style="margin-top:6px">Вопросы защиты: проверяемые факты · почему не судить только по сроку · упаковка/охлаждение/транспорт · 2 совета.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="13. Кейс 1 — Видео: обработка молока">
+  <div class="hdr"><span class="stage-chip t">Опора к кейсу 1</span><h2>Обработка молока: <span class="g">почему разный срок</span></h2><div class="sp"></div></div>
+  <div class="body">
+    <div class="col" style="flex:.85">
+      <div class="card">
+        <h3>Ключ для экспертов</h3>
+        <ul class="b">
+          <li><b>Пастеризация</b> — нагрев &lt; 100 °C: снижает патогены, короткий срок в холоде.</li>
+          <li><b>Ультрапастеризация (UHT)</b> — краткий нагрев до высоких t° + асептический розлив: длительный срок <b>без</b> обязательных консервантов.</li>
+          <li>После вскрытия оба продукта уязвимы к микрофлоре — смотрите условия на этикетке.</li>
+          <li>Слово «натуральный» — маркетинг, не сертификат экологичности.</li>
+        </ul>
+      </div>
+      <div class="note">Видео — дополнительный источник. Сверяйте утверждения с маркировкой кейса и официальными нормами.</div>
+    </div>
+    <div class="col"><div class="vidbox">
+<iframe src="https://www.youtube-nocookie.com/embed/E_VJLrsXN44?rel=0" title="Виды обработки молока: пастеризация и выбор" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+<div class="vcap"><b>Виды обработки молока: пастеризация и выбор</b> · Русский Бариста<br>
+<a href="https://www.youtube.com/watch?v=E_VJLrsXN44" target="_blank" rel="noopener">Открыть на YouTube ↗</a></div>
+</div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="14. Кейс 2 — Овощи и фрукты">
+  <div class="hdr"><span class="stage-chip o">Защита 2/4</span><h2>Кейс 2. <span class="g">Местные или привозные?</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="защита"></div></div>
+  <div class="case-head"><div class="case-num">2</div><div><span class="model">учебная модель · Прил. 1</span><p class="small"><b>Проблема:</b> местные = безопасно/эко? Импорт = опаснее из‑за перевозки? Данных для категоричных выводов нет.</p></div></div>
+  <div class="compare">
+    <div class="box a"><h4>Рынок: «местные» яблоки</h4><p class="small">Цена и страна на ценнике · нет хозяйства и партии · нет анализа на пестициды.</p></div>
+    <div class="box b"><h4>Супермаркет: импорт</h4><p class="small">Страна, поставщик, масса нетто, партия · тоже нет лабораторных результатов на пестициды.</p></div>
+  </div>
+  <div class="grid2" style="margin-top:14px;flex:none">
+    <div class="card">
+      <h3 style="font-size:22px">Задание</h3>
+      <p class="small">Что известно / чего не хватает / как проверить. Сезонность, транспорт, хранение, упаковка, происхождение.</p>
+    </div>
+    <div class="card t">
+      <h3 style="font-size:22px">Ожидаемый продукт</h3>
+      <p class="small">Сравнительная карта «известно — не хватает — как проверить».</p>
+      <p class="tiny" style="margin-top:6px">Почему «местное» ≠ отсутствие загрязнителей · какие документы нужны · сезонность и след · нельзя судить о пестицидах без анализа.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="15. Кейс 3 — Мясная продукция">
+  <div class="hdr"><span class="stage-chip o">Защита 3/4</span><h2>Кейс 3. <span class="g">Маркировка и холодовая цепь</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="защита"></div></div>
+  <div class="case-head"><div class="case-num">3</div><div><span class="model">учебная модель · Прил. 1</span><p class="small"><b>Проблема:</b> ориентация только на цвет и цену. Нужны маркировка, прослеживаемость, условия хранения; экоаспекты — отдельно от безопасности.</p></div></div>
+  <div class="compare">
+    <div class="box a"><h4>Продукт А (упакован)</h4><p class="small">Производитель, партия, дата, срок, t° · температура витрины соответствует режиму.</p></div>
+    <div class="box b"><h4>Продукт Б (развес)</h4><p class="small">Часть сведений на стенде · трудно связать лоток с партией · t° витрины видна, записи контроля покупателю нет.</p></div>
+  </div>
+  <div class="grid2" style="margin-top:14px;flex:none">
+    <div class="card">
+      <h3 style="font-size:22px">Задание</h3>
+      <p class="small">Алгоритм выбора мяса: что проверить на месте / что требует документов. Действия при неполной информации.</p>
+    </div>
+    <div class="card t">
+      <h3 style="font-size:22px">Ожидаемый продукт</h3>
+      <p class="small">Алгоритм проверки + список данных для запроса.</p>
+      <p class="tiny" style="margin-top:6px">Внешний вид ≠ замена маркировки · прослеживаемость партии · экооценка по достоверным данным · решение, если партию нельзя установить.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="16. Кейс 4 — Упаковка">
+  <div class="hdr"><span class="stage-chip o">Защита 4/4</span><h2>Кейс 4. <span class="g">Какая упаковка экологичнее?</span></h2><div class="sp"></div><div class="timer" data-min="4" data-label="защита"></div></div>
+  <div class="case-head"><div class="case-num">4</div><div><span class="model">учебная модель · Прил. 1</span><p class="small"><b>Проблема:</b> «стекло всегда эко» · «знак переработки = гарантированно переработают». Нужен жизненный цикл и местная инфраструктура.</p></div></div>
+  <div class="compare">
+    <div class="box a"><h4>Продукт А — стекло</h4><p class="small">Возможен возврат тары в отдельных точках (по заявлению производителя).</p></div>
+    <div class="box b"><h4>Продукт Б — многослойная лёгкая</h4><p class="small">Знак, воспринимаемый как «перерабатывается» · нет данных, принимают ли в вашем городе.</p></div>
+  </div>
+  <div class="grid2" style="margin-top:14px;flex:none">
+    <div class="card">
+      <h3 style="font-size:22px">Задание</h3>
+      <p class="small">Масса и прочность · повторное использование · транспорт · пункты приёма · отходы. Вывод зависит от всей системы, не только от материала.</p>
+    </div>
+    <div class="card t">
+      <h3 style="font-size:22px">Ожидаемый продукт</h3>
+      <p class="small">Схема жизненного цикла упаковки + условный вердикт с указанием недостающих данных.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="17. Перекрёстная экспертиза (26–32)">
+  <div class="hdr"><span class="stage-chip">26–32 мин · Задание 2</span><h2>Перекрёстная <span class="g">экспертиза</span></h2><div class="sp"></div><div class="timer" data-min="6" data-label="дискуссия"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Каждой группе</h3>
+      <ul class="b">
+        <li>Выберите <b>один самый убедительный аргумент</b> из чужих выступлений.</li>
+        <li>Назовите <b>одно утверждение</b>, для которого не хватает данных.</li>
+        <li>Ответьте: какая информация позволила бы проверить спорное утверждение?</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <h3>Проверяемые источники</h3>
+      <ul class="b">
+        <li>Этикетка / маркировка</li>
+        <li>Официальные сведения производителя</li>
+        <li>Результаты лабораторного анализа</li>
+        <li>Официальные документы (ТР ТС и др.)</li>
+        <li>Данные о переработке в регионе</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card y" style="margin-top:16px;flex:none">
+    <h3>Приём «Плюс — вопрос — что проверить»</h3>
+    <p class="small"><b>+</b> сильная сторона защиты &nbsp;·&nbsp; <b>?</b> что осталось неясным &nbsp;·&nbsp; <b>→</b> что можно улучшить / какой факт запросить</p>
+  </div>
+</section>
+
+<section class="slide" data-title="18. Протокол ответственного выбора (32–37)">
+  <div class="hdr"><span class="stage-chip">32–37 мин · Задание 3</span><h2>Протокол <span class="g">ответственного выбора</span></h2><div class="sp"></div><div class="timer" data-min="5" data-label="совместно"></div></div>
+  <div class="grid3">
+    <div class="card">
+      <h3>🛒 Потребителю</h3>
+      <p>Проверять маркировку и условия хранения; не делать вывод только по «эко»-надписи и цене; учитывать реальную возможность переработки упаковки.</p>
+      <p class="tiny" style="margin-top:8px">Связь с кейсами 1–4: срок молока, местные овощи, холодовая цепь, стекло vs многослойка.</p>
+    </div>
+    <div class="card t">
+      <h3>🏭 Производителю</h3>
+      <p>Давать достоверную, полную и понятную информацию; обеспечивать прослеживаемость партии; не подменять доказательства маркетингом.</p>
+    </div>
+    <div class="card y">
+      <h3>🏪 Торговой точке</h3>
+      <p>Соблюдать холодовую цепь; обеспечивать читаемость сведений о партии; помогать с возвратом/сбором упаковки, если заявляете об этом.</p>
+    </div>
+  </div>
+  <div class="note" style="margin-top:18px">Каждая рекомендация должна быть <b>конкретной, выполнимой</b> и связанной с риском из защищённых кейсов.</div>
+</section>
+
+<section class="slide" data-title="19. Квиз — Финальный вердикт (37–42)">
+  <div class="hdr"><span class="stage-chip">37–42 мин · Задание 4</span><h2>Финальный вердикт <span class="g">эксперта</span></h2><div class="sp"></div><div class="timer" data-min="5" data-label="индивидуально"></div></div>
+  <p class="small" style="margin-bottom:10px">5 вопросов × 1 балл. Нажмите ответ; затем «Показать ключ». Баллы — для обратной связи, не заменяют оценку защиты.</p>
+  <div class="grid2" id="quiz" style="align-content:start">
+    <div class="qcard" data-ans="1"><div class="qn">1. На упаковке крупно «ЭКО». Как оценить?</div>
+      <div class="opts">
+        <div class="opt" data-i="0">А) Считать доказательством экологичности</div>
+        <div class="opt" data-i="1">Б) Проверить, чем подтверждается и что означает</div>
+        <div class="opt" data-i="2">В) Считать, что нет пищевых добавок</div>
+        <div class="opt" data-i="3">Г) Не читать остальную маркировку</div>
+      </div></div>
+    <div class="qcard" data-ans="2"><div class="qn">2. Указана t° хранения, продукт при другой. Действие?</div>
+      <div class="opts">
+        <div class="opt" data-i="0">А) Оценить только по внешнему виду</div>
+        <div class="opt" data-i="1">Б) Купить, если цена ниже</div>
+        <div class="opt" data-i="2">В) Не приобретать до выяснения условий</div>
+        <div class="opt" data-i="3">Г) Считать срок неважным</div>
+      </div></div>
+    <div class="qcard" data-ans="1"><div class="qn">3. Длинный срок молока сам доказывает консерванты?</div>
+      <div class="opts">
+        <div class="opt" data-i="0">А) Да</div>
+        <div class="opt" data-i="1">Б) Нет: влияют обработка и упаковка</div>
+        <div class="opt" data-i="2">В) Да, если импортный</div>
+        <div class="opt" data-i="3">Г) Нет, все продукты одинаковы</div>
+      </div></div>
+    <div class="qcard" data-ans="2"><div class="qn">4. Корректный вывод о местных овощах?</div>
+      <div class="opts">
+        <div class="opt" data-i="0">А) Всегда безопаснее импортных</div>
+        <div class="opt" data-i="1">Б) Всегда меньший экослед</div>
+        <div class="opt" data-i="2">В) Нужны данные о выращивании, хранении, происхождении, перевозке</div>
+        <div class="opt" data-i="3">Г) Маркировку проверять не нужно</div>
+      </div></div>
+    <div class="qcard" data-ans="2"><div class="qn">5. Как сравнивать экологичность упаковки?</div>
+      <div class="opts">
+        <div class="opt" data-i="0">А) Только по материалу</div>
+        <div class="opt" data-i="1">Б) Только по цвету и значку</div>
+        <div class="opt" data-i="2">В) С учётом ЖЦ, повторного использования, перевозки и реальной переработки</div>
+        <div class="opt" data-i="3">Г) По цене продукта</div>
+      </div></div>
+    <div class="card y" style="display:flex;flex-direction:column;justify-content:center;gap:12px">
+      <button class="btn" id="quizKey" type="button">Показать ключ педагога</button>
+      <button class="btn g" id="quizReset" type="button">Сбросить ответы</button>
+      <div id="quizScore" class="small">Отметьте ответы. Ключ: 1–Б, 2–В, 3–Б, 4–В, 5–В.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="20. Рефлексия и ДЗ (42–45)">
+  <div class="hdr"><span class="stage-chip">42–45 мин · Конец</span><h2>Экологический чек и <span class="g">домашнее задание</span></h2><div class="sp"></div><div class="timer" data-min="3" data-label="рефлексия"></div></div>
+  <div class="refl">
+    <div class="r"><h4>Сегодня я понял(а), что…</h4><div class="line"></div><div class="line"></div></div>
+    <div class="r" style="border-top-color:var(--sky)"><h4>Для оценки продукта недостаточно…</h4><div class="line"></div><div class="line"></div></div>
+    <div class="r" style="border-top-color:var(--sun)"><h4>В следующий раз я проверю…</h4><div class="line"></div><div class="line"></div></div>
+  </div>
+  <div class="card" style="margin-top:18px;flex:none">
+    <h3>Домашнее задание · аудит одного продукта дома</h3>
+    <p class="small">Запишите: состав · дату и срок годности · условия хранения · страну/регион (если указаны) · тип упаковки. Вывод: что подтверждено, чего не хватает, что улучшить для ответственного потребления.</p>
+    <div class="warn" style="margin-top:10px"><b>Продукт не вскрывать и не пробовать</b> специально для задания. Без дегустации.</div>
+  </div>
+  <p class="tiny" style="margin-top:10px">Самооценка: ☐ могу объяснить другому &nbsp; ☐ понимаю, нужна практика &nbsp; ☐ нужна помощь</p>
+</section>
+
+<section class="slide" data-title="21. Итог и источники">
+  <div class="hdr"><span class="stage-chip t">Итог</span><h2>Главный вывод <span class="g">эксперта</span></h2><div class="sp"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Запомните</h3>
+      <ul class="b">
+        <li>Качество ≠ безопасность ≠ экологичность</li>
+        <li>Маркетинг проверяем фактами</li>
+        <li>Срок годности объясняется технологией и упаковкой</li>
+        <li>«Местное» не гарантирует чистоту от загрязнителей</li>
+        <li>Экооценка упаковки — по жизненному циклу и инфраструктуре</li>
+        <li>В РК/ЕАЭС ориентир — ТР ТС (в т.ч. 021/2011, 033/2013)</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <h3>Видеоуроки в презентации</h3>
+      <p class="small">1. Пищевые добавки: польза и вред<br><a href="https://www.youtube.com/watch?v=ihG5Wac-05o" target="_blank">youtube.com/watch?v=ihG5Wac-05o</a></p>
+      <p class="small" style="margin-top:8px">2. Чтение этикеток (Роспотребнадзор)<br><a href="https://www.youtube.com/watch?v=j4i68i7DlvA" target="_blank">youtube.com/watch?v=j4i68i7DlvA</a></p>
+      <p class="small" style="margin-top:8px">3. Пищевая безопасность (Роспотребнадзор)<br><a href="https://www.youtube.com/watch?v=qLIP9j1kQU0" target="_blank">youtube.com/watch?v=qLIP9j1kQU0</a></p>
+      <p class="small" style="margin-top:8px">4. Виды обработки молока<br><a href="https://www.youtube.com/watch?v=E_VJLrsXN44" target="_blank">youtube.com/watch?v=E_VJLrsXN44</a></p>
+      <p class="tiny" style="margin-top:12px">Кейсы — учебные модели. Без обвинений брендов. Лабораторный анализ не заменён этикеткой.</p>
+    </div>
+  </div>
+  <div class="note" style="margin-top:16px">Спасибо! КГУ «Гимназия №1» · Хмель Светлана Сергеевна · факультатив, 11 класс</div>
+</section>
+
+</div>
+<div id="bar" style="width:4.5%"></div>
+<div id="counter">1 / 21</div>
+<div id="navbtns">
+  <button type="button" id="nPrev" title="←">←</button>
+  <button type="button" id="nNext" title="→">→</button>
+  <button type="button" id="nToc" title="Оглавление (O)">☰</button>
+  <button type="button" id="nFs" title="Fullscreen (F)">⛶</button>
+</div>
+<div id="toc"><div class="box"><h3>Содержание урока</h3><ol></ol></div></div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const stage=$("#stage"), slides=$$(".slide"); let cur=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`}
+addEventListener("resize",fit);fit();
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[cur].classList.remove("active");cur=i;slides[cur].classList.add("active");
+  $("#counter").textContent=(cur+1)+" / "+slides.length;$("#bar").style.width=((cur+1)/slides.length*100)+"%";
+  history.replaceState(null,"","#"+(cur+1));$$("#toc li").forEach((li,k)=>li.classList.toggle("cur",k===cur));}
+const toc=$("#toc ol");slides.forEach((s,i)=>{const li=document.createElement("li");li.textContent=s.dataset.title||("Слайд "+(i+1));li.onclick=()=>{go(i);$("#toc").classList.remove("on")};toc.appendChild(li)});
+function fs(){if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen&&document.exitFullscreen()}
+addEventListener("keydown",e=>{const tg=e.target;if(tg&&(tg.tagName==="INPUT"||tg.tagName==="TEXTAREA"))return;
+  const k=e.key;if(["ArrowRight","PageDown"," ","ArrowDown"].includes(k)){e.preventDefault();go(cur+1)}
+  else if(["ArrowLeft","PageUp","ArrowUp","Backspace"].includes(k)){e.preventDefault();go(cur-1)}
+  else if(k==="Home")go(0);else if(k==="End")go(slides.length-1);
+  else if("oOщЩ".includes(k)&&k.length===1)$("#toc").classList.toggle("on");
+  else if("fFаА".includes(k)&&k.length===1)fs();
+  else if(k==="Escape")$("#toc").classList.remove("on")});
+$("#nPrev").onclick=()=>go(cur-1);$("#nNext").onclick=()=>go(cur+1);$("#nToc").onclick=()=>$("#toc").classList.toggle("on");$("#nFs").onclick=fs;
+$("#toc").addEventListener("click",e=>{if(e.target.id==="toc")$("#toc").classList.remove("on")});
+const h=parseInt((location.hash||"#1").slice(1),10);if(h>=1&&h<=slides.length)go(h-1);else go(0);
+/* timers */
+$$(".timer").forEach(t=>{
+  const min=parseFloat(t.dataset.min||"5"); let left=Math.round(min*60), run=null, total=left;
+  const tv=document.createElement("div");tv.className="tv";tv.textContent=fmt(left);
+  const tl=document.createElement("div");tl.className="tl";tl.textContent=t.dataset.label||"таймер";
+  const b=document.createElement("button");b.type="button";b.textContent="▶";b.className="go";
+  const r=document.createElement("button");r.type="button";r.textContent="↺";
+  t.append(tv,tl,b,r);
+  const tick=()=>{left--;tv.textContent=fmt(left);if(left<=0){clearInterval(run);run=null;t.classList.remove("run");t.classList.add("done");b.textContent="▶"}};
+  b.onclick=()=>{if(run){clearInterval(run);run=null;t.classList.remove("run");b.textContent="▶";return}
+    if(left<=0){left=total;t.classList.remove("done")} t.classList.add("run");b.textContent="❚❚";run=setInterval(tick,1000)};
+  r.onclick=()=>{clearInterval(run);run=null;left=total;tv.textContent=fmt(left);t.classList.remove("run","done");b.textContent="▶"}};
+});
+/* quiz */
+const KEY={0:1,1:2,2:1,3:2,4:2}; // indices of qcards 0..4
+$$("#quiz .qcard").forEach((qc,qi)=>{
+  if(!qc.dataset.ans)return;
+  qc.querySelectorAll(".opt").forEach(o=>{
+    o.onclick=()=>{qc.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));o.classList.add("sel");qc.dataset.picked=o.dataset.i};
+  });
+});
+$("#quizKey").onclick=()=>{
+  let ok=0,n=0;
+  $$("#quiz .qcard").forEach(qc=>{
+    if(!qc.dataset.ans)return;n++;
+    const ans=+qc.dataset.ans; const picked=qc.dataset.picked;
+    qc.querySelectorAll(".opt").forEach(o=>{
+      o.classList.remove("correct","wrong");
+      if(+o.dataset.i===ans)o.classList.add("correct");
+      if(picked!==undefined&&+o.dataset.i===+picked&&+picked!==ans)o.classList.add("wrong");
+    });
+    if(picked!==undefined&&+picked===ans)ok++;
+  });
+  $("#quizScore").textContent=`Результат: ${ok} / ${n}. Ключ педагога: 1–Б; 2–В; 3–Б; 4–В; 5–В.`;
+};
+$("#quizReset").onclick=()=>{
+  $$("#quiz .qcard").forEach(qc=>{delete qc.dataset.picked;qc.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel","correct","wrong"))});
+  $("#quizScore").textContent="Отметьте ответы. Ключ: 1–Б, 2–В, 3–Б, 4–В, 5–В.";
+};
+</script>
+</body>
+</html>
