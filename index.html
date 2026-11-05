@@ -681,7 +681,7 @@ $$(".timer").forEach(t=>{
   const tick=()=>{left--;tv.textContent=fmt(left);if(left<=0){clearInterval(run);run=null;t.classList.remove("run");t.classList.add("done");b.textContent="▶"}};
   b.onclick=()=>{if(run){clearInterval(run);run=null;t.classList.remove("run");b.textContent="▶";return}
     if(left<=0){left=total;t.classList.remove("done")} t.classList.add("run");b.textContent="❚❚";run=setInterval(tick,1000)};
-  r.onclick=()=>{clearInterval(run);run=null;left=total;tv.textContent=fmt(left);t.classList.remove("run","done");b.textContent="▶"}};
+  r.onclick=()=>{clearInterval(run);run=null;left=total;tv.textContent=fmt(left);t.classList.remove("run","done");b.textContent="▶"};
 });
 /* quiz */
 const KEY={0:1,1:2,2:1,3:2,4:2}; // indices of qcards 0..4
